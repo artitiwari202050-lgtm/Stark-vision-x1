@@ -1,1 +1,667 @@
-# Stark-vision-x1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STARK VISION X1 - AI Smart Glasses</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0f, #1a0a1f, #0a1a1f);
+            animation: bgShift 20s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Grid Lines */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            background-image: 
+                linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            background: rgba(10,10,15,0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid #ff2020;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #ff2020, #00f5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo::before {
+            content: "⚡ ";
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ff2020, #ffd700);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 5%;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffd700, #ff2020, #00f5ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255,32,32,0.5);
+            animation: glowPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowPulse {
+            from { filter: drop-shadow(0 0 20px #ff2020); }
+            to { filter: drop-shadow(0 0 40px #ffd700); }
+        }
+
+        .hero-tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #00f5ff;
+            text-shadow: 0 0 10px rgba(0,245,255,0.5);
+        }
+
+        .product-image {
+            width: 350px;
+            height: 200px;
+            margin: 2rem 0;
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            position: relative;
+            border: 2px solid #ff2020;
+            box-shadow: 
+                0 0 50px rgba(255,32,32,0.3),
+                inset 0 0 50px rgba(255,255,0,0.1);
+            animation: productGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes productGlow {
+            from { 
+                box-shadow: 
+                    0 0 50px rgba(255,32,32,0.3),
+                    inset 0 0 50px rgba(255,255,0,0.1);
+                transform: rotateY(0deg);
+            }
+            to { 
+                box-shadow: 
+                    0 0 80px rgba(255,215,0,0.5),
+                    inset 0 0 80px rgba(255,32,32,0.2);
+                transform: rotateY(5deg);
+            }
+        }
+
+        .product-image::before {
+            content: "🕶️ STARK VISION X1";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 20px #ffd700;
+        }
+
+        .price-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: linear-gradient(45deg, #ff2020, #ffd700);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            font-family: 'Orbitron', monospace;
+            box-shadow: 0 0 30px rgba(255,32,32,0.5);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .stock-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff2020;
+            color: #fff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            animation: stockPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes stockPulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Orbitron', monospace;
+            margin: 0 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff2020, #ffd700);
+            color: #000;
+            box-shadow: 0 0 20px rgba(255,32,32,0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00f5ff;
+            border: 2px solid #00f5ff;
+            box-shadow: 0 0 20px rgba(0,245,255,0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 40px rgba(255,32,32,0.6);
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            background: linear-gradient(45deg, #ffd700, #ff2020);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(26,26,46,0.8);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,32,32,0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,32,32,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff2020;
+            box-shadow: 0 20px 60px rgba(255,32,32,0.3);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 20px #00f5ff);
+        }
+
+        /* Specs Table */
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(26,26,46,0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .specs-table th,
+        .specs-table td {
+            padding: 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,32,32,0.2);
+            font-family: 'Orbitron', monospace;
+        }
+
+        .specs-table th {
+            background: linear-gradient(90deg, #ff2020, #ffd700);
+            color: #000;
+            font-weight: 700;
+        }
+
+        .specs-table tr:hover {
+            background: rgba(255,32,32,0.1);
+        }
+
+        /* Reviews */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: rgba(26,26,46,0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0,245,255,0.3);
+            position: relative;
+        }
+
+        .stars {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff2020, #ffd700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 20px rgba(255,32,32,0.5);
+        }
+
+        /* Purchase Section */
+        .purchase-container {
+            background: rgba(26,26,46,0.9);
+            padding: 3rem;
+            border-radius: 30px;
+            border: 2px solid #ff2020;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00f5ff;
+            font-weight: 600;
+        }
+
+        .form-group select,
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(10,10,15,0.8);
+            border: 1px solid #00f5ff;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 2px solid #ff2020;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: modalSlide 0.3s ease-out;
+        }
+
+        @keyframes modalSlide {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal h2 {
+            color: #ff2020;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', monospace;
+            animation: scanlineFlicker 0.1s infinite;
+        }
+
+        @keyframes scanlineFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            background: rgba(10,10,15,0.8);
+            border: 1px solid #00f5ff;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #ff2020;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,32,32,0.2);
+            transform: rotate(90deg);
+        }
+
+        .success-msg {
+            color: #00f5ff;
+            font-weight: 600;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(10,10,15,0.95);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid #ff2020;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                padding: 0 2rem;
+            }
+            
+            .btn {
+                display: block;
+                margin: 1rem auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">STARK VISION X1</div>
+        <ul class="nav-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#specs">Specs</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#purchase">Buy Now</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>STARK VISION X1</h1>
+        <p class="hero-tagline">See The World Like A Hero</p>
+        <div class="product-image"></div>
+        <div class="price-badge">
+            ₹12,000
+            <div class="stock-badge">Only 0 left!</div>
+        </div>
+        <div>
+            <button class="btn btn-primary" onclick="showOutOfStockModal()">BUY NOW</button>
+            <button class="btn btn-secondary" onclick="showOutOfStockModal()">ADD TO CART</button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section">
+        <h2 class="section-title">CORE FEATURES</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🧠</div>
+                <h3>AI Vision Processing</h3>
+                <p>Real-time object recognition, facial analysis, and environmental scanning powered by next-gen neural networks.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>HUD Heads-Up Display</h3>
+                <p>Full-color holographic display overlays navigation, notifications, and augmented reality directly in your field of view.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📡</div>
+                <h3>Wireless Neural Sync</h3>
+                <p>Bluetooth 6.0 and neural interface sync with all devices, including brain-computer interfaces.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔋</div>
+                <h3>72-Hour Battery Life</h3>
+                <p>Advanced graphene battery technology provides uninterrupted power for extended missions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Bulletproof Lens</h3>
+                <p>MIL-SPEC sapphire crystal lenses with ballistic protection and anti-scratch nano-coating.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3>Real-time Translation</h3>
+                <p>Instant translation of 147 languages with 99.9% accuracy, displayed in AR overlay.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specs Section -->
+    <section id="specs" class="section">
+        <h2 class="section-title">TECHNICAL SPECIFICATIONS</h2>
+        <table class="specs-table">
+            <thead>
+                <tr>
+                    <th>Specification</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Weight</td>
+                    <td>28g</td>
+                </tr>
+                <tr>
+                    <td>Display</td>
+                    <td>Retinal Projection, 8K Resolution</td>
+                </tr>
+                <tr>
+                    <td>AI Chip</td>
+                    <td>Stark Neural Processor S1 (16-core)</td>
+                </tr>
+                <tr>
+                    <td>Connectivity</td>
+                    <td>Bluetooth 6.0, WiFi 7, Neuralink Compatible</td>
+                </tr>
+                <tr>
+                    <td>Battery</td>
+                    <td>72 hours (5000mAh Graphene)</td>
+                </tr>
+                <tr>
+                    <td>Water Resistance</td>
+                    <td>IP69K (Submersible 10m)</td>
+                </tr>
+                <tr>
+                    <td>Field of View</td>
+                    <td>120°</td>
+                </tr>
+                <tr>
+                    <td>Lens Material</td>
+                    <td>Sapphire Crystal (Bulletproof)</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="section">
+        <h2 class="section-title">USER REVIEWS</h2>
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <div class="avatar">TS</div>
+                <h4>Tony S.</h4>
+                <p>"These glasses are straight out of sci-fi! The AI vision is insanely accurate and the HUD is crystal clear. Worth every penny."</p>
+            </div>
+            <div class="review-card">
+                <div class="stars">★★★★★</div>
+                <div class="avatar">PP</div>
+                <h4>Pepper P.</h4>
+                <p>"Perfect integration with all my devices. Battery life is incredible. Feels like having JARVIS in my glasses!"</p>
+            </div>
+            <div class="review-card">
+                
